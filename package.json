@@ -2,15 +2,17 @@
   "name": "poloniex-api-gui",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001/",
   "dependencies": {
-    "react": "^15.5.4",
-    "react-dom": "^15.5.4",
     "bootstrap": "^3.3.7",
     "crypto-js": "^3.1.9-1",
+    "express": "^4.15.3",
     "font-awesome": "^4.7.0",
     "poloniex-api": "^1.1.0",
+    "react": "^15.5.4",
     "react-bootstrap": "^0.31.0",
     "react-data-grid": "^2.0.44",
+    "react-dom": "^15.5.4",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",
@@ -19,16 +21,20 @@
     "redux": "^3.6.0",
     "redux-form": "^6.7.0",
     "redux-thunk": "^2.2.0",
-    "source-map-support": "^0.4.14"
+    "source-map-support": "^0.4.14",
+    "babel-cli": "6.14.0",
+    "babel-core": "6.14.0"
 
   },
   "devDependencies": {
+    "express-debug": "^1.1.1",
     "react-scripts": "1.0.7"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "babel-node ./server/app.js"
   }
 }

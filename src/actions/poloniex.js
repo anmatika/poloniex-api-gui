@@ -2,16 +2,15 @@
  import poloniexApi from 'poloniex-api';
 // import keys from '../../../keys/apikeys';
 import objectHelper from '../utils/objectHelper';
-
-
+import Client from '../Client';
 export const GET_BALANCES = 'GET_BALANCES';
 export const SHOW_TICKER = 'SHOW_TICKER';
 export const SHOW_OPEN_ORDERS = 'SHOW_OPEN_ORDERS';
 export const SET_INITIAL_VALUES = 'SET_INITIAL_VALUES';
 export const BUY = 'BUY';
 export const SHOW_MESSAGE = 'SHOW_MESSAGE';
-
 const keys = {};
+
 const api = poloniexApi.tradingApi.create(keys.poloniex_api_key, keys.poloniex_secret);
 
 export function setInitialValues() {
@@ -50,13 +49,13 @@ export function showMessage(data) {
 
 export function getBalancesAsync() {
   return (dispatch: () => void, getState) => {
-    api.returnBalances()
-      .then((res) => {
-        console.log(res.body);
+    Client.search('getBalancesAsync', (res) => {
+      debugger;
+      console.log(res.body);
         return dispatch(getBalances(
           objectHelper.getNonEmptyArrayValuesFromObject(JSON.parse(res.body))));
-      }).catch(err => console.log('err', err));
-  };
+      })
+    };
 }
 
 export function showOpenOrdersAsync() {
