@@ -1,0 +1,34 @@
+{
+  "name": "poloniex-api-gui",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "bootstrap": "^3.3.7",
+    "crypto-js": "^3.1.9-1",
+    "font-awesome": "^4.7.0",
+    "poloniex-api": "^1.1.0",
+    "react-bootstrap": "^0.31.0",
+    "react-data-grid": "^2.0.44",
+    "react-redux": "^5.0.4",
+    "react-router": "^4.1.1",
+    "react-router-dom": "^4.1.1",
+    "react-router-redux": "^5.0.0-alpha.6",
+    "react-tabs": "^1.0.0",
+    "redux": "^3.6.0",
+    "redux-form": "^6.7.0",
+    "redux-thunk": "^2.2.0",
+    "source-map-support": "^0.4.14"
+
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.7"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
