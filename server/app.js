@@ -33,6 +33,35 @@ const rate = req.body.rate;
   }).catch(err => res.error(err))
 })
 
+app.post('/api/sell', (req, res) => {
+const currencyPair = req.body.currencyPair;
+const amount = req.body.amount;
+const rate = req.body.rate;
+
+  api.sell({ currencyPair, amount, rate })
+  .then(msg => {
+    res.send(msg)
+  }).catch(err => res.error(err))
+})
+
+app.post('/api/returnOpenOrders', (req, res) => {
+const currencyPair = req.body.currencyPair;
+
+  api.returnOpenOrders({ currencyPair })
+  .then(msg => {
+    res.send(msg)
+  }).catch(err => res.error(err))
+})
+
+app.post('/api/cancelOrder', (req, res) => {
+const orderNumber = req.body.orderNumber;
+
+  api.cancelOrder({ orderNumber })
+  .then(msg => {
+    res.send(msg)
+  }).catch(err => res.error(err))
+})
+
 app.get('/api/main', (req, res) => {
   // const param = req.query.q;
 

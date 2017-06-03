@@ -45,7 +45,7 @@ class PoloniexPage extends React.Component {
                               <Buy />
                         </TabPanel>
                         <TabPanel>
-                              <Sell {...this.props} />
+                              <Sell />
                         </TabPanel>
                   </Tabs>
             </div>);

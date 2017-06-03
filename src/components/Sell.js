@@ -2,15 +2,16 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
+import * as actions from '../actions/poloniex';
 
 const Sell = (props) => {
     const onSubmit = (values) => {
-        debugger;
-      props.sellAsync({
+      values.preventDefault();
+      props.dispatch(actions.sellAsync({
         currencyPair: values.target.currencyPair.value,
         amount: values.target.amount.value,
         rate: values.target.rate.value
-      });
+      }));
     };
 
     return (<form onSubmit={onSubmit}>

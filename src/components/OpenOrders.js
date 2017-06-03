@@ -1,10 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Button } from 'react-bootstrap';
 import Grid from './Grid';
+import * as actions from '../actions/poloniex';
 
-const OpenOrders = ({ state, showOpenOrdersAsync, cancelOrderAsync }) => {
+const OpenOrders = ({ state, dispatch, showOpenOrdersAsync, cancelOrderAsync }) => {
     function onClick() {
-        showOpenOrdersAsync();
+        dispatch(actions.showOpenOrdersAsync());
     }
 
     const CancelOrderButton = ({ value }) => (<button onClick={() => cancelOrderAsync(value)}>Cancel</button>);
@@ -48,4 +50,5 @@ const OpenOrders = ({ state, showOpenOrdersAsync, cancelOrderAsync }) => {
         </div>);
  };
 
-export default OpenOrders;
+export default connect((state) => ({ state: state.app }))(OpenOrders);
+
