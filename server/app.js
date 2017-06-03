@@ -62,50 +62,14 @@ const orderNumber = req.body.orderNumber;
   }).catch(err => res.error(err))
 })
 
-app.get('/api/main', (req, res) => {
-  // const param = req.query.q;
-
-  const param = req.query.q;
-
-  log('param', param)
-
-  if (!param) {
-    log('missing param')
-    res.json({
-      error: 'Missing required parameter `q`',
-    });
-    return;
-  }
-
-  switch(param) {
-    case 'getBalances': 
-      log('returnBalances hit')
-       return returnBalances(res);
-    case 'buy': 
-      log('buy hit')
-       return buy(res);
-    default:
-       res.send('unknown query')
-  }
-
+app.get('/api/getBalances', (req, res) => {
+    console.log('req.param.q', req.param.q)
+    res.setHeader('Content-Type', 'application/json');
+     api.returnBalances()
+      .then((r) => {
+        res.send(r);
+    }).catch(err => res.send(err));
 });
-
-function returnBalances(res)  {
-    res.setHeader('Content-Type', 'application/json');
-     api.returnBalances()
-      .then((r) => {
-        res.send(r);
-    }).catch(err => res.send(err));
-}
-
-function buy(res) {
-
-    res.setHeader('Content-Type', 'application/json');
-     api.returnBalances()
-      .then((r) => {
-        res.send(r);
-    }).catch(err => res.send(err));
-}
 
 app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console

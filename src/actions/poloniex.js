@@ -44,7 +44,7 @@ export function showMessage(data) {
 
 export function getBalancesAsync() {
   return (dispatch, getState) => {
-    Client.search('getBalances', (res) => {
+    Client.get('getBalances').then(res => {
       console.log(res.body);
         return dispatch(getBalances(
           objectHelper.getNonEmptyArrayValuesFromObject(JSON.parse(res.body))));

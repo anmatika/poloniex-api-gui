@@ -1,13 +1,18 @@
-import fetch from 'isomorphic-fetch';
+// import fetch from 'isomorphic-fetch';
 /* eslint-disable no-undef */
-function search(query, cb) {
-  return fetch(`api/main?q=${query}`, {
+function get(endpoint, query) {
+  const param = query 
+    ? `api/${endpoint}?q=${query}`
+    : `api/${endpoint}`;
+
+  return fetch(param, {
     accept: 'application/json',
    'Content-Type': 'application/json'
   }).then(checkStatus)
     .then(parseJSON)
-    .then(cb);
+    .catch(err => console.log(err) )
 }
+
 
 function post(endpoint, body) {
   return fetch(`api/${endpoint}`, {
@@ -24,6 +29,7 @@ function post(endpoint, body) {
 }
 
 function checkStatus(response) {
+  console.log('checkstatus', response)
   if (response.status >= 200 && response.status < 300) {
     return response;
   }
@@ -38,5 +44,5 @@ function parseJSON(response) {
   return response.json();
 }
 
-const Client = { search, post };
+const Client = { get, post };
 export default Client;
