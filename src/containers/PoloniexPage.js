@@ -27,7 +27,6 @@ class PoloniexPage extends React.Component {
                   <Tabs>
                         <TabList>
                               <Tab>Balances</Tab>
-                              <Tab>Ticker</Tab>
                               <Tab>Open orders</Tab>
                               <Tab>Buy</Tab>
                               <Tab>Sell</Tab>
@@ -36,10 +35,7 @@ class PoloniexPage extends React.Component {
                               <ShowBalances />
                         </TabPanel>
                         <TabPanel>
-                              <Ticker {...this.props} />
-                        </TabPanel>
-                        <TabPanel>
-                              <OpenOrders {...this.props} />
+                              <OpenOrders />
                         </TabPanel>
                         <TabPanel>
                               <Buy />
