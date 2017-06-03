@@ -6,8 +6,17 @@ import { connect } from 'react-redux';
 import * as actions from '../actions/poloniex';
 
 const Buy = (props) => {
+    const onSubmit = (values) => {
 
-    return (<form onSubmit={props.handleSubmit} >
+      values.preventDefault()
+      props.dispatch(actions.buyAsync({
+        currencyPair: values.target.currencyPair.value,
+        amount: values.target.amount.value,
+        rate: values.target.rate.value
+      }));
+    }
+
+    return (<form onSubmit={onSubmit} >
             <h2>Buy</h2>
             <Field component="input" name="currencyPair" type="text" placeholder="currency pair" />
             <Field component="input" name="amount" type="text" placeholder="amount" />

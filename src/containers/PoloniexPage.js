@@ -19,17 +19,10 @@ class PoloniexPage extends React.Component {
       }
 
     onSubmit(values) {
-      this.props.buyAsync({
-        currencyPair: values.target.currencyPair.value,
-        amount: values.target.amount.value,
-        rate: values.target.rate.value
-      });
-    }
+          }
       render() {
             return (
             <div>
-                  <Buy handleSubmit={this.onSubmit.bind(this)} />
-
                   <Message  />
                   <Tabs>
                         <TabList>

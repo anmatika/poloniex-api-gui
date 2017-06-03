@@ -69,8 +69,12 @@ export function showOpenOrdersAsync() {
 
 export function buyAsync({ currencyPair, amount, rate }) {
   return (dispatch: () => void, getState) => {
-    return dispatch(showMessage('foobar'));
-    // api.buy({ currencyPair, amount, rate }).then(msg => {
+  Client.post('buy', { currencyPair, amount, rate })
+  .then(res => { 
+      console.log(res.body);
+      return dispatch(showMessage(res.body));
+  });
+  // api.buy({ currencyPair, amount, rate }).then(msg => {
     //   const converted = objectHelper.objectToArray(JSON.parse(msg.body));
     //   if (!converted.orderNumber) {
     //     return dispatch(showMessage(msg.body));
