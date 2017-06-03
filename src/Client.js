@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 function search(query, cb) {
-  return fetch(`api/food?q=${query}`, {
+  return fetch(`api/main?q=${query}`, {
     accept: 'application/json',
    'Content-Type': 'application/json'
   }).then(checkStatus)
