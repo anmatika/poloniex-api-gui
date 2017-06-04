@@ -10,64 +10,64 @@ export const SHOW_MESSAGE = 'SHOW_MESSAGE';
 
 export function setInitialValues() {
   return {
-      type: SET_INITIAL_VALUES
+    type: SET_INITIAL_VALUES,
   };
 }
 
 export function getBalances(data) {
   return {
-      type: GET_BALANCES,
-      data
+    type: GET_BALANCES,
+    data,
   };
 }
 
 export function showTicker(data) {
   return {
-      type: SHOW_TICKER,
-      data
+    type: SHOW_TICKER,
+    data,
   };
 }
 
 export function showOpenOrders(data) {
   return {
-      type: SHOW_OPEN_ORDERS,
-      data
+    type: SHOW_OPEN_ORDERS,
+    data,
   };
 }
 
 export function showMessage(data) {
   return {
-      type: SHOW_MESSAGE,
-      data
+    type: SHOW_MESSAGE,
+    data,
   };
 }
 
 export function getBalancesAsync() {
   return (dispatch, getState) => {
-    Client.get('getBalances').then(res => {
+    Client.get('getBalances').then((res) => {
       console.log(res.body);
-        return dispatch(getBalances(
+      return dispatch(getBalances(
           objectHelper.getNonEmptyArrayValuesFromObject(JSON.parse(res.body))));
-      })
-    };
+    });
+  };
 }
 
 export function showOpenOrdersAsync() {
   return (dispatch, getState) => {
-  Client.post('returnOpenOrders', { currencyPair: 'all' })
-    .then(res => { 
-        console.log(res.body);
-        return dispatch(showOpenOrders(res.body));
+    Client.post('returnOpenOrders', { currencyPair: 'all' })
+    .then((res) => {
+      console.log(res.body);
+      return dispatch(showOpenOrders(res.body));
     }).catch(err => console.log('err', err));
   };
 }
 
 export function buyAsync({ currencyPair, amount, rate }) {
   return (dispatch, getState) => {
-  Client.post('buy', { currencyPair, amount, rate })
-  .then(res => { 
-      console.log(res.body);
-      return dispatch(showMessage(res.body));
+    Client.post('buy', { currencyPair, amount, rate })
+  .then((res) => {
+    console.log(res.body);
+    return dispatch(showMessage(res.body));
   });
   };
 }
@@ -75,9 +75,9 @@ export function buyAsync({ currencyPair, amount, rate }) {
 export function sellAsync({ currencyPair, amount, rate }) {
   return (dispatch, getState) => {
     Client.post('sell', { currencyPair, amount, rate })
-    .then(res => { 
-        console.log(res.body);
-        return dispatch(showMessage(res.body));
+    .then((res) => {
+      console.log(res.body);
+      return dispatch(showMessage(res.body));
     });
   };
 }
@@ -85,9 +85,9 @@ export function sellAsync({ currencyPair, amount, rate }) {
 export function cancelOrderAsync(orderNumber) {
   return (dispatch, getState) => {
     Client.post('cancelOrder', { orderNumber })
-    .then(res => { 
-        console.log(res.body);
-        return dispatch(showMessage(res.body));
+    .then((res) => {
+      console.log(res.body);
+      return dispatch(showMessage(res.body));
     });
   };
 }

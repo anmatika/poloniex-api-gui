@@ -14,49 +14,49 @@ import Message from '../components/Message';
 
 class PoloniexPage extends React.Component {
 
-      componentDidMount() {
-            this.props.setInitialValues();
-      }
+  componentDidMount() {
+    this.props.setInitialValues();
+  }
 
-    onSubmit(values) {
-          }
-      render() {
-            return (
-            <div>
-                  <Message  />
-                  <Tabs>
-                        <TabList>
-                              <Tab>Balances</Tab>
-                              <Tab>Open orders</Tab>
-                              <Tab>Buy</Tab>
-                              <Tab>Sell</Tab>
-                        </TabList>
-                        <TabPanel>
-                              <ShowBalances />
-                        </TabPanel>
-                        <TabPanel>
-                              <OpenOrders />
-                        </TabPanel>
-                        <TabPanel>
-                              <Buy />
-                        </TabPanel>
-                        <TabPanel>
-                              <Sell />
-                        </TabPanel>
-                  </Tabs>
-            </div>);
-      }
+  onSubmit(values) {
+  }
+  render() {
+    return (
+      <div>
+        <Message />
+        <Tabs>
+          <TabList>
+            <Tab>Balances</Tab>
+            <Tab>Open orders</Tab>
+            <Tab>Buy</Tab>
+            <Tab>Sell</Tab>
+          </TabList>
+          <TabPanel>
+            <ShowBalances />
+          </TabPanel>
+          <TabPanel>
+            <OpenOrders />
+          </TabPanel>
+          <TabPanel>
+            <Buy />
+          </TabPanel>
+          <TabPanel>
+            <Sell />
+          </TabPanel>
+        </Tabs>
+      </div>);
+  }
 
 }
 
 function mapStateToProps(state) {
-    return {
-      state: state.poloniex
-    };
+  return {
+    state: state.poloniex,
+  };
 }
 
 function mapDispatchToProps(dispatch) {
-   return bindActionCreators(PoloniexActions, dispatch);
+  return bindActionCreators(PoloniexActions, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PoloniexPage);
