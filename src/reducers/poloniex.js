@@ -2,7 +2,7 @@
 import { GET_BALANCES, TOGGLE_SPINNER, SHOW_OPEN_ORDERS, SET_INITIAL_VALUES, SHOW_MESSAGE } from '../actions/poloniex';
 import objecthelper from '../utils/objectHelper';
 
-export default function crypter(state = {}, action) {
+export default function poloniex(state = {}, action) {
   switch (action.type) {
 
     case SET_INITIAL_VALUES:
