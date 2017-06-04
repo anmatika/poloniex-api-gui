@@ -1,35 +1,35 @@
 // import fetch from 'isomorphic-fetch';
 /* eslint-disable no-undef */
 function get(endpoint, query) {
-  const param = query 
+  const param = query
     ? `api/${endpoint}?q=${query}`
     : `api/${endpoint}`;
 
   return fetch(param, {
     accept: 'application/json',
-   'Content-Type': 'application/json'
+    'Content-Type': 'application/json',
   }).then(checkStatus)
     .then(parseJSON)
-    .catch(err => console.log(err) )
+    .catch(err => console.log(err));
 }
 
 
 function post(endpoint, body) {
   return fetch(`api/${endpoint}`, {
     method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    })
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  })
     .then(checkStatus)
     .then(parseJSON)
-    .catch(err => console.log(err) )
+    .catch(err => console.log(err));
 }
 
 function checkStatus(response) {
-  console.log('checkstatus', response)
+  console.log('checkstatus', response);
   if (response.status >= 200 && response.status < 300) {
     return response;
   }

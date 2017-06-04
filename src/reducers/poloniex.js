@@ -8,8 +8,8 @@ export default function crypter(state = {}, action) {
     case SET_INITIAL_VALUES:
       return {
         openOrders: [{
-          value: [{}]
-        }]
+          value: [{}],
+        }],
       };
 
     case GET_BALANCES:

@@ -8,7 +8,7 @@ describe('Client post', ()=> {
                json: () => ({
                biz: 'buzz'
             })
-        }));
+          }));
     });
     it('resolves json', ()=> {
         return Client.post('foo', 'bar').then(response => {
