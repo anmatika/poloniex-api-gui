@@ -1,5 +1,5 @@
 // @flow
-import { GET_BALANCES, SHOW_OPEN_ORDERS, SET_INITIAL_VALUES, SHOW_MESSAGE } from '../actions/poloniex';
+import { GET_BALANCES, TOGGLE_SPINNER, SHOW_OPEN_ORDERS, SET_INITIAL_VALUES, SHOW_MESSAGE } from '../actions/poloniex';
 import objecthelper from '../utils/objectHelper';
 
 export default function crypter(state = {}, action) {
@@ -28,6 +28,9 @@ export default function crypter(state = {}, action) {
 
     case SHOW_MESSAGE:
       return Object.assign({}, state, { message: action.data });
+
+    case TOGGLE_SPINNER:
+      return Object.assign({}, state, { spinner: action.data });
 
     default:
       console.log('state default', state);

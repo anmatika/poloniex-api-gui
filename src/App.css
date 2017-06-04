@@ -1,6 +1,7 @@
 @import "~font-awesome/css/font-awesome.css";
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~react-tabs/style/react-tabs.css";
+@import "./Spinner.css";
 .App {
   text-align: center;
 }

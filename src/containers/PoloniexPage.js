@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import * as PoloniexActions from '../actions/poloniex';
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import Spinner from 'react-spinner';
+import classNames from 'classnames';
 import ShowBalances from '../components/ShowBalances';
 import Ticker from '../components/Ticker';
 import OpenOrders from '../components/OpenOrders';
@@ -14,15 +16,24 @@ import Message from '../components/Message';
 
 class PoloniexPage extends React.Component {
 
+  constructor(props) {
+    super(props);
+    debugger;
+  }
   componentDidMount() {
     this.props.setInitialValues();
   }
 
-  onSubmit(values) {
-  }
   render() {
+    const reactSpinnerContainerClasses = classNames({
+      'react-spinner-container': true,
+      hide: true,
+    });
     return (
       <div>
+        <div className={reactSpinnerContainerClasses}>
+          <Spinner />
+        </div>
         <Message />
         <Tabs>
           <TabList>

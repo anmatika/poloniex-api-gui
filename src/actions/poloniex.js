@@ -7,6 +7,7 @@ export const SHOW_OPEN_ORDERS = 'SHOW_OPEN_ORDERS';
 export const SET_INITIAL_VALUES = 'SET_INITIAL_VALUES';
 export const BUY = 'BUY';
 export const SHOW_MESSAGE = 'SHOW_MESSAGE';
+export const TOGGLE_SPINNER = 'TOGGLE_SPINNER';
 
 export function setInitialValues() {
   return {
@@ -42,10 +43,20 @@ export function showMessage(data) {
   };
 }
 
+export function toggleSpinner(data) {
+  return {
+    type: TOGGLE_SPINNER,
+    data,
+  };
+}
+
 export function getBalancesAsync() {
   return (dispatch, getState) => {
+    dispatch(toggleSpinner(true));
     Client.get('getBalances').then((res) => {
       console.log(res.body);
+
+      dispatch(toggleSpinner(false));
       return dispatch(getBalances(
           objectHelper.getNonEmptyArrayValuesFromObject(JSON.parse(res.body))));
     });
