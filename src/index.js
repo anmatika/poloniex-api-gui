@@ -15,9 +15,9 @@ const reducer = combineReducers({ app: appReducer, form: formReducer, router });
 const store = createStoreWithMiddleware(reducer);
 
 ReactDOM.render(
- <Provider store={store} >
+  <Provider store={store} >
     <App />
-</Provider>,
+  </Provider>,
 
 document.getElementById('root'));
 registerServiceWorker();
