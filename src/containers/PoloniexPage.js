@@ -1,30 +1,19 @@
 
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as PoloniexActions from '../actions/poloniex';
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import Spinner from 'react-spinner';
-import classNames from 'classnames';
+import Spinner from '../components/Spinner';
 import ShowBalances from '../components/ShowBalances';
-import Ticker from '../components/Ticker';
 import OpenOrders from '../components/OpenOrders';
 import Buy from '../components/Buy';
 import Sell from '../components/Sell';
 import Message from '../components/Message';
 
-
 class PoloniexPage extends React.Component {
   render() {
-    const reactSpinnerContainerClasses = classNames({
-      'react-spinner-container': true,
-      hide: !this.props.state.spinner,
-    });
     return (
       <div>
-        <div className={reactSpinnerContainerClasses}>
-          <Spinner />
-        </div>
+        <Spinner />
         <Message />
         <Tabs>
           <TabList>

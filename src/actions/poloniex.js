@@ -55,51 +55,63 @@ export function getBalancesAsync() {
     dispatch(toggleSpinner(true));
     Client.get('getBalances').then((res) => {
       console.log(res.body);
-
-      dispatch(toggleSpinner(false));
       return dispatch(getBalances(
           objectHelper.getNonEmptyArrayValuesFromObject(JSON.parse(res.body))));
-    });
+    })
+    .catch(err => console.log('err', err))
+    .then(() => dispatch(toggleSpinner(false)));
   };
 }
 
 export function showOpenOrdersAsync() {
   return (dispatch, getState) => {
+    dispatch(toggleSpinner(true));
     Client.post('returnOpenOrders', { currencyPair: 'all' })
     .then((res) => {
       console.log(res.body);
       return dispatch(showOpenOrders(res.body));
-    }).catch(err => console.log('err', err));
+    })
+    .catch(err => console.log('err', err))
+    .then(() => dispatch(toggleSpinner(false)));
   };
 }
 
 export function buyAsync({ currencyPair, amount, rate }) {
   return (dispatch, getState) => {
+    dispatch(toggleSpinner(true));
     Client.post('buy', { currencyPair, amount, rate })
   .then((res) => {
     console.log(res.body);
     return dispatch(showMessage(res.body));
-  });
+  })
+    .catch(err => console.log('err', err))
+    .then(() => dispatch(toggleSpinner(false)));
   };
 }
 
 export function sellAsync({ currencyPair, amount, rate }) {
   return (dispatch, getState) => {
+    dispatch(toggleSpinner(true));
     Client.post('sell', { currencyPair, amount, rate })
     .then((res) => {
       console.log(res.body);
       return dispatch(showMessage(res.body));
-    });
+    })
+    .catch(err => console.log('err', err))
+    .then(() => dispatch(toggleSpinner(false)));
   };
 }
 
 export function cancelOrderAsync(orderNumber) {
   return (dispatch, getState) => {
+    dispatch(toggleSpinner(true));
     Client.post('cancelOrder', { orderNumber })
     .then((res) => {
       console.log(res.body);
       return dispatch(showMessage(res.body));
-    });
+    })
+    .catch(err => console.log('err', err))
+    .then(() => dispatch(toggleSpinner(false)));
   };
 }
 

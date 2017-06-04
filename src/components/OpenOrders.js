@@ -4,12 +4,21 @@ import { Button } from 'react-bootstrap';
 import Grid from './Grid';
 import * as actions from '../actions/poloniex';
 
-const OpenOrders = ({ state, dispatch, showOpenOrdersAsync, cancelOrderAsync }) => {
+const OpenOrders = ({ state, dispatch }) => {
   function onClick() {
     dispatch(actions.showOpenOrdersAsync());
   }
 
-  const CancelOrderButton = ({ value }) => (<button onClick={() => cancelOrderAsync(value)}>Cancel</button>);
+  const CancelOrderButton = ({ value }) => (
+    <button
+      onClick={() => {
+        dispatch(actions.cancelOrderAsync(value));
+        dispatch(actions.showOpenOrdersAsync());
+      }
+    }
+    >
+    Cancel
+  </button>);
 
   function getRows() {
     const rows = [];
