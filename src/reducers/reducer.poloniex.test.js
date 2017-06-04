@@ -27,15 +27,45 @@ describe('GET_BALANCES', () => {
     const state = reducer(initialState, {
       type: GET_BALANCES,
       data: [
-          { ETH: 500 },
-          { DASH: 600 },
+          { ETH: 50 },
+          { DASH: 60 },
       ],
     });
 
-    const expected = { balances: [
+    const expected = {
+      balances: [
         { ETH: 50 },
         { DASH: 60 },
-    ] };
+      ],
+    };
+
+    expect(state).toEqual(expected);
+  });
+});
+
+describe('SHOW_OPEN_ORDERS', () => {
+  it('gets open orders', () => {
+    const initialState = ({});
+
+    const state = reducer(initialState, {
+      type: SHOW_OPEN_ORDERS,
+      data: `{ "BTC_ETC": [],
+        "BTC_ETH": [{ "orderNumber": "12345678", "type": "buy", "rate": "0.10000000", "amount": "1.50000000" }],
+        "BTC_EXP": [],
+        "BTC_FCT": [] }`,
+    });
+
+    const expected = {
+      openOrders: [{
+        key: 'BTC_ETH',
+        value: [{
+          amount: '1.50000000',
+          orderNumber: '12345678',
+          rate: '0.10000000',
+          type: 'buy',
+        }],
+      }],
+    };
 
     expect(state).toEqual(expected);
   });
