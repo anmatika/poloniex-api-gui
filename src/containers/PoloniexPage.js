@@ -15,19 +15,10 @@ import Message from '../components/Message';
 
 
 class PoloniexPage extends React.Component {
-
-  constructor(props) {
-    super(props);
-    debugger;
-  }
-  componentDidMount() {
-    this.props.setInitialValues();
-  }
-
   render() {
     const reactSpinnerContainerClasses = classNames({
       'react-spinner-container': true,
-      hide: true,
+      hide: !this.props.state.spinner,
     });
     return (
       <div>
@@ -60,14 +51,4 @@ class PoloniexPage extends React.Component {
 
 }
 
-function mapStateToProps(state) {
-  return {
-    state: state.poloniex,
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(PoloniexActions, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(PoloniexPage);
+export default connect(state => ({ state: state.app }))(PoloniexPage);
