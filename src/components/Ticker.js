@@ -1,9 +1,9 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 
-const Ticker = ({ state, showTickerAsync }) => {
+const Ticker = ({ state, returnTickerAsync }) => {
   function onClick(e) {
-    showTickerAsync();
+    returnTickerAsync();
   }
   return (
     <div>

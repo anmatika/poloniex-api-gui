@@ -1,11 +1,14 @@
 const express = require('express');
 const apikeys = require('./apikeys');
-const api = require('poloniex-api').tradingApi.create(apikeys.poloniex_api_key, apikeys.poloniex_secret, true);
+const PoloniexApi = require('poloniex-api');
 const debug = require('debug')('http');
 const http = require('http');
 const app = express();
 const chalk = require('chalk');
 const bodyParser = require('body-parser');
+
+const tradingApi = PoloniexApi.tradingApi.create(apikeys.poloniex_api_key, apikeys.poloniex_secret, true);
+const publicApi = PoloniexApi.publicApi.create('', '', true);
 
 app.use(bodyParser.urlencoded({
   extended: true,
@@ -27,7 +30,7 @@ app.post('/api/buy', (req, res) => {
   const amount = req.body.amount;
   const rate = req.body.rate;
 
-  api.buy({ currencyPair, amount, rate })
+  tradingApi.buy({ currencyPair, amount, rate })
   .then((msg) => {
     res.send(msg);
   }).catch(err => res.error(err));
@@ -38,7 +41,7 @@ app.post('/api/sell', (req, res) => {
   const amount = req.body.amount;
   const rate = req.body.rate;
 
-  api.sell({ currencyPair, amount, rate })
+  tradingApi.sell({ currencyPair, amount, rate })
   .then((msg) => {
     res.send(msg);
   }).catch(err => res.error(err));
@@ -47,7 +50,7 @@ app.post('/api/sell', (req, res) => {
 app.post('/api/returnOpenOrders', (req, res) => {
   const currencyPair = req.body.currencyPair;
 
-  api.returnOpenOrders({ currencyPair })
+  tradingApi.returnOpenOrders({ currencyPair })
   .then((msg) => {
     res.send(msg);
   }).catch(err => res.error(err));
@@ -56,7 +59,7 @@ app.post('/api/returnOpenOrders', (req, res) => {
 app.post('/api/cancelOrder', (req, res) => {
   const orderNumber = req.body.orderNumber;
 
-  api.cancelOrder({ orderNumber })
+  tradingApi.cancelOrder({ orderNumber })
   .then((msg) => {
     res.send(msg);
   }).catch(err => res.error(err));
@@ -65,7 +68,15 @@ app.post('/api/cancelOrder', (req, res) => {
 app.get('/api/getBalances', (req, res) => {
   console.log('req.param.q', req.param.q);
   res.setHeader('Content-Type', 'application/json');
-  api.returnBalances()
+  tradingApi.returnBalances()
+      .then((r) => {
+        res.send(r);
+      }).catch(err => res.send(err));
+});
+
+app.get('/api/returnTicker', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  publicApi.returnTicker()
       .then((r) => {
         res.send(r);
       }).catch(err => res.send(err));

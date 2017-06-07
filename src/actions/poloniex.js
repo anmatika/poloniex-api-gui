@@ -1,6 +1,6 @@
-import { tradingApi } from 'poloniex-api';
 import objectHelper from '../utils/objectHelper';
 import Client from '../Client';
+
 export const GET_BALANCES = 'GET_BALANCES';
 export const SHOW_TICKER = 'SHOW_TICKER';
 export const SHOW_OPEN_ORDERS = 'SHOW_OPEN_ORDERS';
@@ -115,10 +115,10 @@ export function cancelOrderAsync(orderNumber) {
   };
 }
 
-export function showTickerAsync() {
-  return (dispatch: () => void, getState) => {
-    // streamApi.create({ subscriptionName: 'ticker' }, (msg) => {
-    // //   console.log(msg);
-    // });
+export function returnTickerAsync() {
+  return (dispatch, getState) => {
+    Client.get('returnTicker').then((res) => {
+      console.log(res);
+    });
   };
 }
