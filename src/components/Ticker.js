@@ -25,8 +25,9 @@ const Ticker = ({ state, returnTickerAsync, dispatch }) => {
     }));
   }
 
+
   const columns = [
-        { key: 'currencyPair', name: 'Currency pair' },
+        { key: 'currencyPair', name: 'Currency pair', sortable: true },
         { key: 'last', name: 'Last' },
         { key: 'percentChange', name: 'Percent' },
         { key: 'baseVolume', name: 'Volume base' },
