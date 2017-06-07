@@ -119,6 +119,7 @@ export function returnTickerAsync() {
   return (dispatch, getState) => {
     Client.get('returnTicker').then((res) => {
       console.log(res);
+      dispatch(showTicker(res.body));
     });
   };
 }

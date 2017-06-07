@@ -8,6 +8,7 @@ import OpenOrders from '../components/OpenOrders';
 import Buy from '../components/Buy';
 import Sell from '../components/Sell';
 import Message from '../components/Message';
+import Ticker from '../components/Ticker';
 
 class PoloniexPage extends React.Component {
   render() {
@@ -21,6 +22,7 @@ class PoloniexPage extends React.Component {
             <Tab>Open orders</Tab>
             <Tab>Buy</Tab>
             <Tab>Sell</Tab>
+            <Tab>Ticker</Tab>
           </TabList>
           <TabPanel>
             <ShowBalances />
@@ -33,6 +35,9 @@ class PoloniexPage extends React.Component {
           </TabPanel>
           <TabPanel>
             <Sell />
+          </TabPanel>
+          <TabPanel>
+            <Ticker />
           </TabPanel>
         </Tabs>
       </div>);

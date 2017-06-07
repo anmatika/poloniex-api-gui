@@ -1,5 +1,5 @@
 // @flow
-import { GET_BALANCES, TOGGLE_SPINNER, SHOW_OPEN_ORDERS, SET_INITIAL_VALUES, SHOW_MESSAGE } from '../actions/poloniex';
+import { SHOW_TICKER, GET_BALANCES, TOGGLE_SPINNER, SHOW_OPEN_ORDERS, SET_INITIAL_VALUES, SHOW_MESSAGE } from '../actions/poloniex';
 import objecthelper from '../utils/objectHelper';
 
 export default function poloniex(state = {}, action) {
@@ -31,6 +31,10 @@ export default function poloniex(state = {}, action) {
 
     case TOGGLE_SPINNER:
       return Object.assign({}, state, { spinner: action.data });
+
+    case SHOW_TICKER:
+      const arr = objecthelper.objectToArray(JSON.parse(action.data));
+      return Object.assign({}, state, { tickers: arr });
 
     default:
       console.log('state default', state);
