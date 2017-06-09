@@ -5499,9 +5499,19 @@ react-bootstrap@^0.31.0:
     uncontrollable "^4.1.0"
     warning "^3.0.0"
 
+react-data-grid-addons@^2.0.48:
+  version "2.0.48"
+  resolved "https://registry.yarnpkg.com/react-data-grid-addons/-/react-data-grid-addons-2.0.48.tgz#fbc5a269426f7a3b5055a2cb7d6bb927d9a92843"
+  dependencies:
+    react-data-grid "^2.0.48"
+
 react-data-grid@^2.0.44:
   version "2.0.46"
   resolved "https://registry.yarnpkg.com/react-data-grid/-/react-data-grid-2.0.46.tgz#9262ea9a97a88898d64797867db74fc5708adab8"
+
+react-data-grid@^2.0.48:
+  version "2.0.48"
+  resolved "https://registry.yarnpkg.com/react-data-grid/-/react-data-grid-2.0.48.tgz#e633e51c1881476bb33eff1c2abf6ee189474835"
 
 react-dev-utils@^3.0.0:
   version "3.0.0"

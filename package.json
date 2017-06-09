@@ -21,6 +21,7 @@
     "react": "^15.5.4",
     "react-bootstrap": "^0.31.0",
     "react-data-grid": "^2.0.44",
+    "react-data-grid-addons": "^2.0.48",
     "react-dom": "^15.5.4",
     "react-redux": "^5.0.4",
     "react-router": "^4.1.1",
