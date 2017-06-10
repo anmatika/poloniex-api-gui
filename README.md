@@ -3,6 +3,8 @@
 ## init
 ```` yarn install ````
 
+create apikeys.js into server folder by
+
 ```` touch server/apikeys.js ````
 
 add these lines to above server/apikeys.js
