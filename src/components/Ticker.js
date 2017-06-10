@@ -25,17 +25,16 @@ const Ticker = ({ state, returnTickerAsync, dispatch }) => {
     }));
   }
 
-
   const columns = [
         { key: 'currencyPair', name: 'Currency pair', sortable: true, filterable: true },
-        { key: 'last', name: 'Last' },
-        { key: 'percentChange', name: 'Percent' },
-        { key: 'baseVolume', name: 'Volume base' },
-        { key: 'quoteVolume', name: 'Volume quote' },
-        { key: 'high24hr', name: 'High 24h' },
-        { key: 'low24hr', name: 'Low 24h' },
-        { key: 'highestBid', name: 'Highest bid' },
-        { key: 'isFrozen', name: 'Frozen' },
+        { key: 'last', name: 'Last', sortable: true, filterable: true },
+        { key: 'percentChange', name: 'Percent', sortable: true, filterable: true },
+        { key: 'baseVolume', name: 'Volume base', sortable: true, filterable: true },
+        { key: 'quoteVolume', name: 'Volume quote', sortable: true, filterable: true },
+        { key: 'high24hr', name: 'High 24h', sortable: true, filterable: true },
+        { key: 'low24hr', name: 'Low 24h', sortable: true, filterable: true },
+        { key: 'highestBid', name: 'Highest bid', sortable: true, filterable: true },
+        { key: 'isFrozen', name: 'Frozen', sortable: true, filterable: true },
   ];
   return (
     <div>

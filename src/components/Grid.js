@@ -18,10 +18,14 @@ class Grid extends React.Component {
 
   handleGridSort(sortColumn, sortDirection) {
     const comparer = (a, b) => {
+      const parsedA = parseFloat(a[sortColumn]);
+      const parsedB = parseFloat(b[sortColumn]);
       if (sortDirection === 'ASC') {
-        return (a[sortColumn] > b[sortColumn]) ? 1 : -1;
+        if (isNaN(parsedA)) { return (a[sortColumn] > b[sortColumn]) ? 1 : -1; }
+        return parsedA > parsedB ? 1 : -1;
       } else if (sortDirection === 'DESC') {
-        return (a[sortColumn] < b[sortColumn]) ? 1 : -1;
+        if (isNaN(parsedA)) { return (a[sortColumn] < b[sortColumn]) ? 1 : -1; }
+        return parsedA < parsedB ? 1 : -1;
       }
     };
 
