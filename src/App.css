@@ -2,6 +2,8 @@
 @import "~bootstrap/dist/css/bootstrap.css";
 @import "~react-tabs/style/react-tabs.css";
 @import "./Spinner.less";
+@import "./Form.less";
+
 .App {
   text-align: center;
 }

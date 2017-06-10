@@ -13,7 +13,7 @@ import Ticker from '../components/Ticker';
 class PoloniexPage extends React.Component {
   render() {
     return (
-      <div>
+      <div className="col-xs-12">
         <Spinner />
         <Message />
         <Tabs>

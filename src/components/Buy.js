@@ -15,12 +15,22 @@ const Buy = (props) => {
     }));
   };
 
-  return (<form onSubmit={onSubmit} >
-    <h2>Buy</h2>
-    <Field component="input" name="currencyPair" type="text" placeholder="currency pair" />
-    <Field component="input" name="amount" type="text" placeholder="amount" />
-    <Field component="input" name="rate" type="text" placeholder="rate" />
-    <Button type="submit" bsStyle="primary" >Buy</Button>
+  return (<form className="form form--centered form--padding-top" onSubmit={onSubmit} >
+    <div className="form-group">
+      <label htmlFor="currencyPair">Currency pair</label>
+      <Field component="input" className="form-control" name="currencyPair" type="text" placeholder="currency pair" />
+    </div>
+    <div className="form-group">
+      <label htmlFor="amount">Amount</label>
+      <Field component="input" className="form-control" name="amount" type="number" placeholder="amount" />
+    </div>
+    <div className="form-group">
+      <label htmlFor="rate">Rate</label>
+      <Field component="input" className="form-control" name="rate" type="number" step="0.01" placeholder="rate" />
+    </div>
+    <div className="form-group">
+      <Button type="submit" bsStyle="primary" >Buy</Button>
+    </div>
 
   </form>);
 };
