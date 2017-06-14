@@ -70,7 +70,9 @@ export function showOpenOrdersAsync() {
     dispatch(toggleSpinner(true));
     Client.post('returnOpenOrders', { currencyPair: 'all' })
             .then((res) => {
-              console.log(res.body);
+              if (res.statusCode === 403) {
+                dispatch(showMessage(res.body));
+              }
               return dispatch(showOpenOrders(res.body));
             })
             .catch(err => console.log('err', err))
@@ -83,7 +85,9 @@ export function buyAsync({ currencyPair, amount, rate }) {
     dispatch(toggleSpinner(true));
     Client.post('buy', { currencyPair, amount, rate })
             .then((res) => {
-              console.log(res.body);
+              if (res.statusCode === 403) {
+                dispatch(showMessage(res.body));
+              }
               return dispatch(showMessage(res.body));
             })
             .catch(err => console.log('err', err))
@@ -96,7 +100,9 @@ export function sellAsync({ currencyPair, amount, rate }) {
     dispatch(toggleSpinner(true));
     Client.post('sell', { currencyPair, amount, rate })
             .then((res) => {
-              console.log(res.body);
+              if (res.statusCode === 403) {
+                dispatch(showMessage(res.body));
+              }
               return dispatch(showMessage(res.body));
             })
             .catch(err => console.log('err', err))
@@ -109,7 +115,6 @@ export function cancelOrderAsync(orderNumber) {
     dispatch(toggleSpinner(true));
     Client.post('cancelOrder', { orderNumber })
             .then((res) => {
-              console.log(res.body);
               return dispatch(showMessage(res.body));
             })
             .catch(err => console.log('err', err))
@@ -120,7 +125,9 @@ export function cancelOrderAsync(orderNumber) {
 export function returnTickerAsync() {
   return (dispatch, getState) => {
     Client.get('returnTicker').then((res) => {
-      console.log(res);
+      if (res.statusCode === 403) {
+        dispatch(showMessage(res.body));
+      }
       dispatch(showTicker(res.body));
     });
   };
