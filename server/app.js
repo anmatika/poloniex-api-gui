@@ -23,15 +23,6 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
 
-io.on('connection', (socket) => {
-  // when the client emits 'new message', this listens and executes
-  socket.broadcast.emit('message', 'hello!');
-});
-
-server.listen(app.get('port'), () => {
-  console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
-});
-
 function log(...text) {
   console.log(chalk.bgBlue(...text));
 }
@@ -93,4 +84,15 @@ app.get('/api/returnTicker', (req, res) => {
       }).catch(err => res.send(err));
 });
 
+io.on('connection', (socket) => {
+  // when the client emits 'new message', this listens and executes
+  socket.emit('message', 'hello!');
+  io.on('CH01', (from, msg) => {
+    console.log('MSG', from, ' saying ', msg);
+  });
+});
 
+
+server.listen(app.get('port'), () => {
+  console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
+});
