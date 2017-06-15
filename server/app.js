@@ -6,6 +6,8 @@ const http = require('http');
 const app = express();
 const chalk = require('chalk');
 const bodyParser = require('body-parser');
+const server = require('http').createServer(app);
+const io = require('socket.io').listen(server);
 
 const tradingApi = PoloniexApi.tradingApi.create(apikeys.poloniex_api_key, apikeys.poloniex_secret, true);
 const publicApi = PoloniexApi.publicApi.create('', '', true);
@@ -20,6 +22,15 @@ app.set('port', (process.env.PORT || 3001));
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
+
+io.on('connection', (socket) => {
+  // when the client emits 'new message', this listens and executes
+  socket.broadcast.emit('message', 'hello!');
+});
+
+server.listen(app.get('port'), () => {
+  console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
+});
 
 function log(...text) {
   console.log(chalk.bgBlue(...text));
@@ -82,6 +93,4 @@ app.get('/api/returnTicker', (req, res) => {
       }).catch(err => res.send(err));
 });
 
-app.listen(app.get('port'), () => {
-  console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
-});
+

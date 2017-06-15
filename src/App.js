@@ -6,6 +6,8 @@ import PoloniexPage from './containers/PoloniexPage';
 import * as PoloniexActions from './actions/poloniex';
 import './App.css';
 
+
+
 class App extends Component {
   componentDidMount() {
     this.props.setInitialValues();
