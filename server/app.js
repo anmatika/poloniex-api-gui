@@ -11,6 +11,7 @@ const io = require('socket.io').listen(server);
 
 const tradingApi = PoloniexApi.tradingApi.create(apikeys.poloniex_api_key, apikeys.poloniex_secret, true);
 const publicApi = PoloniexApi.publicApi.create('', '', true);
+const pushApi = PoloniexApi.pushApi;
 
 app.use(bodyParser.urlencoded({
   extended: true,
@@ -84,11 +85,36 @@ app.get('/api/returnTicker', (req, res) => {
       }).catch(err => res.send(err));
 });
 
+
+app.get('/api/returnTickerRealTime', (req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  pushApi.create({
+    subscriptionName: 'ticker',
+    currencyPair: 'BTC_ETH',
+    debug: true }, (obj) => {
+    console.log(obj);
+    socket.emit(obj);
+  });
+});
+
 io.on('connection', (socket) => {
   // when the client emits 'new message', this listens and executes
   socket.emit('message', 'hello!');
-  io.on('CH01', (from, msg) => {
+  socket.emit('imready', 'foo');
+
+  socket.on('CH01', (from, msg) => {
     console.log('MSG', from, ' saying ', msg);
+    socket.emit('message', 'MSG');
+  });
+  socket.on('returnTickerRealTime', (currencyPair) => {
+    console.log('returnTickerRealTime');
+    pushApi.create({
+      subscriptionName: 'ticker',
+      currencyPair: 'BTC_ETH',
+      debug: true }, (obj) => {
+      console.log(obj);
+      socket.emit('ticker', obj);
+    });
   });
 });
 

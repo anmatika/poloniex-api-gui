@@ -3,6 +3,7 @@ import Client from '../Client';
 
 export const GET_BALANCES = 'GET_BALANCES';
 export const SHOW_TICKER = 'SHOW_TICKER';
+export const SHOW_TICKER_REAL_TIME = 'SHOW_TICKER_REAL_TIME';
 export const SHOW_OPEN_ORDERS = 'SHOW_OPEN_ORDERS';
 export const SET_INITIAL_VALUES = 'SET_INITIAL_VALUES';
 export const BUY = 'BUY';
@@ -25,6 +26,13 @@ export function getBalances(data) {
 export function showTicker(data) {
   return {
     type: SHOW_TICKER,
+    data,
+  };
+}
+
+export function showTickerRealTime(data) {
+  return {
+    type: SHOW_TICKER_REAL_TIME,
     data,
   };
 }
@@ -114,9 +122,7 @@ export function cancelOrderAsync(orderNumber) {
   return (dispatch, getState) => {
     dispatch(toggleSpinner(true));
     Client.post('cancelOrder', { orderNumber })
-            .then((res) => {
-              return dispatch(showMessage(res.body));
-            })
+            .then(res => dispatch(showMessage(res.body)))
             .catch(err => console.log('err', err))
             .then(() => dispatch(toggleSpinner(false)));
   };
@@ -124,7 +130,7 @@ export function cancelOrderAsync(orderNumber) {
 
 export function returnTickerAsync() {
   return (dispatch, getState) => {
-    Client.get('returnTicker').then((res) => {
+    Client.get('returnTickerRealTime').then((res) => {
       if (res.statusCode === 403) {
         dispatch(showMessage(res.body));
       }
