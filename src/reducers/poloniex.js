@@ -38,7 +38,22 @@ export default function poloniex(state = {}, action) {
       return Object.assign({}, state, { tickers: arr });
 
     case SHOW_TICKER_REAL_TIME:
-      const arrTickerRealTime = action.data;
+      let arrTickerRealTime = [];
+      if (state.tickersRealTime) {
+        arrTickerRealTime = state.tickersRealTime.slice();
+      }
+      const d = {
+        key: action.data.currencyPair,
+        value: action.data,
+      };
+      if (arrTickerRealTime.some(x => x.key === d.key)) {
+        console.log(d.key, 'value changed')
+        arrTickerRealTime[d.key] = d;
+      } else {
+        console.log(d.key, 'added')
+        arrTickerRealTime.push(d);
+      }
+
       return Object.assign({}, state, { tickersRealTime: arrTickerRealTime });
 
     default:

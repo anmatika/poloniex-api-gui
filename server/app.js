@@ -110,7 +110,7 @@ io.on('connection', (socket) => {
     console.log('returnTickerRealTime');
     pushApi.create({
       subscriptionName: 'ticker',
-      currencyPair: 'BTC_ETH',
+      currencyPair: currencyPair || 'all',
       debug: true }, (obj) => {
       console.log(obj);
       socket.emit('ticker', obj);

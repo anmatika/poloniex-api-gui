@@ -130,7 +130,7 @@ export function cancelOrderAsync(orderNumber) {
 
 export function returnTickerAsync() {
   return (dispatch, getState) => {
-    Client.get('returnTickerRealTime').then((res) => {
+    Client.get('returnTicker').then((res) => {
       if (res.statusCode === 403) {
         dispatch(showMessage(res.body));
       }
