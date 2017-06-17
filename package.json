@@ -16,6 +16,7 @@
         "express": "^4.15.3",
         "font-awesome": "^4.7.0",
         "isomorphic-fetch": "^2.2.1",
+        "lodash": "^4.17.4",
         "nodemon": "^1.11.0",
         "poloniex-api": "^1.1.0",
         "react": "^15.5.4",

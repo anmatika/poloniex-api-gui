@@ -4,14 +4,19 @@ import { Button } from 'react-bootstrap';
 import Grid from './Grid';
 import * as actions from '../actions/poloniex';
 import SocketApi from './SocketApi';
+import _ from 'lodash';
+import { Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
 
 const TickerRealTime = ({ state, dispatch }) => {
   function onClick(e) {
+
+    dispatch(actions.toggleSpinner(true));
     const socketApi = new SocketApi();
     socketApi.connect().then(c => console.log('connected'));
-    socketApi.emit('returnTickerRealTime');
+    socketApi.emit('returnTickerRealTime', 'all');
     socketApi.on('ticker', (data) => {
       dispatch(actions.showTickerRealTime(data));
+      dispatch(actions.toggleSpinner(false));
 
       console.log(data);
     });
@@ -53,9 +58,22 @@ const TickerRealTime = ({ state, dispatch }) => {
   return (
     <div>
       <h2>Ticker</h2>
-      <Grid rows={getRows()} columns={columns} />
+      { state.tickersRealTime.length > 0 && state.tickersRealTime.map(x => (<div key={`ticker-${x.key}`}>
+        <div className="col-xs-3">
+          <Panel header={x.key}>
+            <ListGroup>
+              <ListGroupItem>
+              Price: { x.value.lastPrice }
+              </ListGroupItem>
+              <ListGroupItem>
+              %: { x.value.percentChange }
+              </ListGroupItem>
+            </ListGroup>
+          </Panel>
+        </div>
+      </div>))}
 
-      <Button bsStyle="primary" onClick={onClick} >Show ticker</Button>
+      <Button bsStyle="primary" onClick={onClick} >Connect stream</Button>
     </div>);
 };
 

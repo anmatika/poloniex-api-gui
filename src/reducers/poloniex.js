@@ -10,6 +10,7 @@ export default function poloniex(state = {}, action) {
         openOrders: [{
           value: [{}],
         }],
+        tickersRealTime: [],
       };
 
     case GET_BALANCES:
@@ -47,10 +48,11 @@ export default function poloniex(state = {}, action) {
         value: action.data,
       };
       if (arrTickerRealTime.some(x => x.key === d.key)) {
-        console.log(d.key, 'value changed')
-        arrTickerRealTime[d.key] = d;
+        console.log(d.key, 'value changed');
+        // arrTickerRealTime[d.key].value = d.value;
+        arrTickerRealTime.find(x => x.key === d.key).value = d.value;
       } else {
-        console.log(d.key, 'added')
+        console.log(d.key, 'added');
         arrTickerRealTime.push(d);
       }
 
