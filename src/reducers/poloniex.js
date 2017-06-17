@@ -39,28 +39,38 @@ export default function poloniex(state = {}, action) {
       return Object.assign({}, state, { tickers: arr });
 
     case SHOW_TICKER_REAL_TIME:
-      let arrTickerRealTime = [];
-      if (state.tickersRealTime) {
-        arrTickerRealTime = state.tickersRealTime.slice();
-      }
-      const d = {
-        key: action.data.currencyPair,
-        value: action.data,
-      };
-      if (arrTickerRealTime.some(x => x.key === d.key)) {
-        console.log(d.key, 'value changed');
-        // arrTickerRealTime[d.key].value = d.value;
-        arrTickerRealTime.find(x => x.key === d.key).value = d.value;
-      } else {
-        console.log(d.key, 'added');
-        arrTickerRealTime.push(d);
-      }
-
-      return Object.assign({}, state, { tickersRealTime: arrTickerRealTime });
+      return showTickerRealTime(state, action);
 
     default:
       console.log('state default', state);
 
       return state;
   }
+}
+
+function showTickerRealTime(state, action) {
+  let arrTickerRealTime = [];
+  const data = {
+    key: action.data.currencyPair,
+    value: action.data,
+  };
+
+  if (state.tickersRealTime) {
+    arrTickerRealTime = state.tickersRealTime.slice();
+  }
+
+  if (arrTickerRealTime.some(x => x.key === data.key)) {
+    console.log(data.key, 'same key');
+    
+    const key = arrTickerRealTime.find(x => x.key === data.key);
+    data.value.priceChangedUp = key.value.lastPrice < data.value.lastPrice;
+    data.value.priceChangedDown = key.value.lastPrice > data.value.lastPrice;
+    data.value.priceSame = key.value.lastPrice === data.value.lastPrice;
+    key.value = data.value;
+  } else {
+    console.log(data.key, 'added');
+    arrTickerRealTime.push(data);
+  }
+
+  return Object.assign({}, state, { tickersRealTime: arrTickerRealTime });
 }

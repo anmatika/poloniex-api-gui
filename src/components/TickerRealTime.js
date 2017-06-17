@@ -6,10 +6,10 @@ import * as actions from '../actions/poloniex';
 import SocketApi from './SocketApi';
 import _ from 'lodash';
 import { Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
+import classNames from 'classnames';
 
 const TickerRealTime = ({ state, dispatch }) => {
   function onClick(e) {
-
     dispatch(actions.toggleSpinner(true));
     const socketApi = new SocketApi();
     socketApi.connect().then(c => console.log('connected'));
@@ -55,23 +55,33 @@ const TickerRealTime = ({ state, dispatch }) => {
         { key: 'highestBid', name: 'Highest bid', sortable: true, filterable: true },
         { key: 'isFrozen', name: 'Frozen', sortable: true, filterable: true },
   ];
+
   return (
     <div>
       <h2>Ticker</h2>
-      { state.tickersRealTime.length > 0 && state.tickersRealTime.map(x => (<div key={`ticker-${x.key}`}>
-        <div className="col-xs-3">
-          <Panel header={x.key}>
-            <ListGroup>
-              <ListGroupItem>
-              Price: { x.value.lastPrice }
-              </ListGroupItem>
-              <ListGroupItem>
+      { state.tickersRealTime.length > 0 && state.tickersRealTime.map((x) => {
+        const priceClassNames = classNames({
+          'color-green': x.value.priceChangedUp,
+          'color-red': x.value.priceChangedDown,
+          'color-black': x.value.priceSame,
+        });
+
+        return (<div key={`ticker-${x.key}`}>
+          <div className="col-xs-3">
+            <Panel header={x.key}>
+              <ListGroup>
+                <ListGroupItem>
+              Price: <span className={priceClassNames}>{ x.value.lastPrice }</span>
+                </ListGroupItem>
+                <ListGroupItem>
               %: { x.value.percentChange }
-              </ListGroupItem>
-            </ListGroup>
-          </Panel>
-        </div>
-      </div>))}
+                </ListGroupItem>
+              </ListGroup>
+            </Panel>
+          </div>
+        </div>)
+ ;
+      })}
 
       <Button bsStyle="primary" onClick={onClick} >Connect stream</Button>
     </div>);
