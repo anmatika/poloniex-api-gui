@@ -62,7 +62,7 @@ const TickerRealTime = ({ state, dispatch }) => {
       <div
         className="row"
       >
-        <div className="row-xs-12">
+        <div className="col-xs-12 margin-b-25">
           <Button bsStyle="primary" onClick={onClick} >{ state.showTickerRealTimeSubscribed ? 'Disconnect stream' : 'Connect stream' }</Button>
         </div>
       </div>
