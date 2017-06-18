@@ -11,7 +11,7 @@ export default function poloniex(state = {}, action) {
           value: [{}],
         }],
         tickersRealTime: [],
-        showTickerRealTimeSearchTerm: '',
+        tickersRealTimeSearchTerm: '',
       };
 
     case GET_BALANCES:
@@ -46,7 +46,7 @@ export default function poloniex(state = {}, action) {
       return showTickerRealTime(state, action);
 
     case SET_TICKER_REAL_TIME_SEARCH_TERM:
-      return Object.assign({}, state, { showTickerRealTimeSearchTerm: action.data });
+      return Object.assign({}, state, { tickersRealTimeSearchTerm: action.data });
 
     default:
       console.log('state default', state);

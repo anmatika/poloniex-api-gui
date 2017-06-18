@@ -35,7 +35,7 @@ const TickerRealTime = ({ state, dispatch }) => {
 
   const KEYS_TO_FILTERS = ['key'];
   const filteredTickersRealTime = state.tickersRealTime
-  .filter(createFilter(state.showTickerRealTimeSearchTerm, KEYS_TO_FILTERS));
+  .filter(createFilter(state.tickersRealTimeSearchTerm, KEYS_TO_FILTERS));
 
   return (
     <div>
