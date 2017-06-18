@@ -13,14 +13,14 @@ const TickerRealTime = ({ state, dispatch }) => {
     dispatch(actions.showTickerRealTimeSubscribe(!state.showTickerRealTimeSubscribed));
 
     if (state.showTickerRealTimeSubscribed) {
-      service.socketApi.disconnect().then(c => console.log('disconnected'));
+      service.socketTickerRealTime.disconnect().then(c => console.log('disconnected'));
       dispatch(actions.toggleSpinner(false));
       return;
     }
 
-    service.socketApi.connect().then(c => console.log('connected'));
-    service.socketApi.emit('returnTickerRealTime', 'all');
-    service.socketApi.on('ticker', (data) => {
+    service.socketTickerRealTime.connect().then(c => console.log('connected'));
+    service.socketTickerRealTime.emit('returnTickerRealTime', 'all');
+    service.socketTickerRealTime.on('ticker', (data) => {
       if (data.length > 0) {
         dispatch(actions.showTickerRealTime(data));
         dispatch(actions.toggleSpinner(false));

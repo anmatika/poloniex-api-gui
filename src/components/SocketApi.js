@@ -1,15 +1,15 @@
 import io from 'socket.io-client';
 
-// Example conf. You can move this to your config file.
 const host = 'http://localhost:3001';
-const socketPath = '/api/socket.io';
 
 export default class socketAPI {
-  socket;
+  constructor({ socketPath }) {
+    this.socketPath = socketPath;
+  }
 
   connect() {
-    // this.socket = io.connect(host, { path: socketPath });
-    this.socket = io.connect(host, { forceNew: true });
+    console.log('socketpath', this.socketPath);
+    this.socket = io.connect(`${host}/${this.socketPath}`, { forceNew: true });
     return new Promise((resolve, reject) => {
       this.socket.on('connect', () => resolve());
       this.socket.on('connect_error', error => reject(error));

@@ -1,3 +1,3 @@
 module.exports.service = {
-  socket: {},
+  socketTickerRealTime: {},
 };

@@ -85,7 +85,8 @@ app.get('/api/returnTicker', (req, res) => {
       }).catch(err => res.send(err));
 });
 
-io.on('connection', (socket) => {
+io.of('tickerRealTime')
+.on('connection', (socket) => {
   let setIntervalId;
   let buffer = [];
   // when the client emits 'new message', this listens and executes
