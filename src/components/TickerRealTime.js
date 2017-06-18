@@ -14,14 +14,17 @@ const TickerRealTime = ({ state, dispatch }) => {
 
     if (state.showTickerRealTimeSubscribed) {
       service.socketApi.disconnect().then(c => console.log('disconnected'));
+      dispatch(actions.toggleSpinner(false));
       return;
     }
 
     service.socketApi.connect().then(c => console.log('connected'));
     service.socketApi.emit('returnTickerRealTime', 'all');
     service.socketApi.on('ticker', (data) => {
-      dispatch(actions.showTickerRealTime(data));
-      dispatch(actions.toggleSpinner(false));
+      if (data.length > 0) {
+        dispatch(actions.showTickerRealTime(data));
+        dispatch(actions.toggleSpinner(false));
+      }
     });
   }
 
@@ -55,7 +58,14 @@ const TickerRealTime = ({ state, dispatch }) => {
 
   return (
     <div>
-      <h2>Ticker</h2>
+      <h2>Ticker stream</h2>
+      <div
+        className="row"
+      >
+        <div className="row-xs-12">
+          <Button bsStyle="primary" onClick={onClick} >{ state.showTickerRealTimeSubscribed ? 'Disconnect stream' : 'Connect stream' }</Button>
+        </div>
+      </div>
       { state.tickersRealTime.length > 0 && state.tickersRealTime.map((x) => {
         const priceClassNames = classNames({
           'color-green': x.value.priceChangedUp,
@@ -80,7 +90,6 @@ const TickerRealTime = ({ state, dispatch }) => {
  ;
       })}
 
-      <Button bsStyle="primary" onClick={onClick} >{ state.showTickerRealTimeSubscribed ? 'Disconnect stream' : 'Connect stream' }</Button>
     </div>);
 };
 
