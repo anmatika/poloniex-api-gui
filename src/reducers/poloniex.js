@@ -35,7 +35,6 @@ export default function poloniex(state = {}, action) {
       return Object.assign({}, state, { spinner: action.data });
 
     case SHOW_TICKER:
-      // const arr = objecthelper.objectToArray(JSON.parse(action.data));
       const arr = objecthelper.objectToArray(action.data);
       return Object.assign({}, state, { tickers: arr });
 
@@ -67,6 +66,7 @@ function showTickerRealTime(state, action) {
       key: obj.currencyPair,
       value: obj,
     };
+
     if (arrTickerRealTime.some(x => x.key === currencyObjNew.key)) {
       const currencyObjExisting = arrTickerRealTime.find(x => x.key === currencyObjNew.key);
       currencyObjNew.value.priceChangedUp = currencyObjExisting.value.lastPrice < currencyObjNew.value.lastPrice;
@@ -79,8 +79,8 @@ function showTickerRealTime(state, action) {
   });
 
   const arrTickerRealTimeSorted = arrTickerRealTime.sort((a, b) => {
-    const nameA = a.key.toUpperCase(); // ignore upper and lowercase
-    const nameB = b.key.toUpperCase(); // ignore upper and lowercase
+    const nameA = a.key.toUpperCase();
+    const nameB = b.key.toUpperCase();
     if (nameA < nameB) {
       return -1;
     }
@@ -89,5 +89,6 @@ function showTickerRealTime(state, action) {
     }
     return 0;
   });
+
   return Object.assign({}, state, { tickersRealTime: arrTickerRealTimeSorted });
 }
