@@ -1,5 +1,5 @@
 // @flow
-import { SHOW_TICKER, SHOW_TICKER_REAL_TIME, GET_BALANCES, TOGGLE_SPINNER, SHOW_OPEN_ORDERS, SET_INITIAL_VALUES, SHOW_MESSAGE } from '../actions/poloniex';
+import { SHOW_TICKER_REAL_TIME_SUBSCRIBED, SHOW_TICKER, SHOW_TICKER_REAL_TIME, GET_BALANCES, TOGGLE_SPINNER, SHOW_OPEN_ORDERS, SET_INITIAL_VALUES, SHOW_MESSAGE } from '../actions/poloniex';
 import objecthelper from '../utils/objectHelper';
 
 export default function poloniex(state = {}, action) {
@@ -38,6 +38,9 @@ export default function poloniex(state = {}, action) {
       const arr = objecthelper.objectToArray(action.data);
       return Object.assign({}, state, { tickers: arr });
 
+    case SHOW_TICKER_REAL_TIME_SUBSCRIBED:
+      return Object.assign({}, state, { showTickerRealTimeSubscribed: action.data });
+
     case SHOW_TICKER_REAL_TIME:
       return showTickerRealTime(state, action);
 
@@ -50,27 +53,30 @@ export default function poloniex(state = {}, action) {
 
 function showTickerRealTime(state, action) {
   let arrTickerRealTime = [];
-  const data = {
-    key: action.data.currencyPair,
-    value: action.data,
-  };
 
   if (state.tickersRealTime) {
     arrTickerRealTime = state.tickersRealTime.slice();
   }
 
-  if (arrTickerRealTime.some(x => x.key === data.key)) {
-    console.log(data.key, 'same key');
-    
-    const key = arrTickerRealTime.find(x => x.key === data.key);
-    data.value.priceChangedUp = key.value.lastPrice < data.value.lastPrice;
-    data.value.priceChangedDown = key.value.lastPrice > data.value.lastPrice;
-    data.value.priceSame = key.value.lastPrice === data.value.lastPrice;
-    key.value = data.value;
-  } else {
-    console.log(data.key, 'added');
-    arrTickerRealTime.push(data);
-  }
+  action.data.forEach((d) => {
+    const data = {
+      key: d.currencyPair,
+      value: d,
+    };
+    if (arrTickerRealTime.some(x => x.key === data.key)) {
+      console.log(data.key, 'same key');
+
+      const key = arrTickerRealTime.find(x => x.key === data.key);
+      data.value.priceChangedUp = key.value.lastPrice < data.value.lastPrice;
+      data.value.priceChangedDown = key.value.lastPrice > data.value.lastPrice;
+      data.value.priceSame = key.value.lastPrice === data.value.lastPrice;
+      key.value = data.value;
+    } else {
+      console.log(data.key, 'added');
+      arrTickerRealTime.push(data);
+    }
+  });
+
 
   return Object.assign({}, state, { tickersRealTime: arrTickerRealTime });
 }

@@ -9,6 +9,7 @@ export const SET_INITIAL_VALUES = 'SET_INITIAL_VALUES';
 export const BUY = 'BUY';
 export const SHOW_MESSAGE = 'SHOW_MESSAGE';
 export const TOGGLE_SPINNER = 'TOGGLE_SPINNER';
+export const SHOW_TICKER_REAL_TIME_SUBSCRIBED = 'SHOW_TICKER_REAL_TIME_SUBSCRIBED';
 
 export function setInitialValues() {
   return {
@@ -54,6 +55,13 @@ export function showMessage(data) {
 export function toggleSpinner(data) {
   return {
     type: TOGGLE_SPINNER,
+    data,
+  };
+}
+
+export function showTickerRealTimeSubscribe(data) {
+  return {
+    type: SHOW_TICKER_REAL_TIME_SUBSCRIBED,
     data,
   };
 }

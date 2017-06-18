@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
@@ -7,7 +8,7 @@ import _ from 'lodash';
 import classNames from 'classnames';
 import service from './service';
 
-const TickerRealTime = ({ state, dispatch }) => {
+const TickerRealTimeGrid = ({ state, dispatch }) => {
   function onClick(e) {
     dispatch(actions.toggleSpinner(true));
     dispatch(actions.showTickerRealTimeSubscribe(!state.showTickerRealTimeSubscribed));
@@ -20,10 +21,10 @@ const TickerRealTime = ({ state, dispatch }) => {
     service.socketApi.connect().then(c => console.log('connected'));
     service.socketApi.emit('returnTickerRealTime', 'all');
     service.socketApi.on('ticker', (data) => {
-      setTimeout(() => {
-        dispatch(actions.showTickerRealTime(data));
-        dispatch(actions.toggleSpinner(false));
-      }, 10000);
+      dispatch(actions.showTickerRealTime(data));
+      dispatch(actions.toggleSpinner(false));
+
+      console.log(data);
     });
   }
 
@@ -58,32 +59,9 @@ const TickerRealTime = ({ state, dispatch }) => {
   return (
     <div>
       <h2>Ticker</h2>
-      { state.tickersRealTime.length > 0 && state.tickersRealTime.map((x) => {
-        const priceClassNames = classNames({
-          'color-green': x.value.priceChangedUp,
-          'color-red': x.value.priceChangedDown,
-          'color-black': x.value.priceSame,
-        });
-
-        return (<div key={`ticker-${x.key}`}>
-          <div className="col-xs-3">
-            <Panel header={x.key}>
-              <ListGroup>
-                <ListGroupItem>
-              Price: <span className={priceClassNames}>{ x.value.lastPrice }</span>
-                </ListGroupItem>
-                <ListGroupItem>
-              %: { x.value.percentChange }
-                </ListGroupItem>
-              </ListGroup>
-            </Panel>
-          </div>
-        </div>)
- ;
-      })}
-
+      <Grid rows={getRows()} columns={columns} />
       <Button bsStyle="primary" onClick={onClick} >{ state.showTickerRealTimeSubscribed ? 'Disconnect stream' : 'Connect stream' }</Button>
     </div>);
 };
 
-export default connect(state => ({ state: state.app }))(TickerRealTime);
+export default connect(state => ({ state: state.app }))(TickerRealTimeGrid);

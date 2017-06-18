@@ -98,23 +98,30 @@ app.get('/api/returnTickerRealTime', (req, res) => {
 });
 
 io.on('connection', (socket) => {
+  let setIntervalId;
+  let buffer = [];
   // when the client emits 'new message', this listens and executes
-  socket.emit('message', 'hello!');
-  socket.emit('imready', 'foo');
-
-  socket.on('CH01', (from, msg) => {
-    console.log('MSG', from, ' saying ', msg);
-    socket.emit('message', 'MSG');
-  });
   socket.on('returnTickerRealTime', (currencyPair) => {
-    console.log('returnTickerRealTime');
     pushApi.create({
       subscriptionName: 'ticker',
       currencyPair: currencyPair || 'all',
       debug: true }, (obj) => {
-      console.log(obj);
-      socket.emit('ticker', obj);
+      buffer.push(obj);
     });
+  });
+
+  setIntervalId = setInterval(() => {
+    socket.volatile.emit('ticker', buffer);
+    buffer = [];
+  }, 2000);
+
+  socket.on('connect', () => {
+    console.log(`${socket.name} has connected. ${socket.id}`);
+  });
+
+  socket.on('disconnect', () => {
+    console.log(`${socket.name} has disconnected. ${socket.id}`);
+    clearInterval(setIntervalId);
   });
 });
 
