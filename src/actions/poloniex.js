@@ -142,7 +142,7 @@ export function returnTickerAsync() {
       if (res.statusCode === 403) {
         dispatch(showMessage(res.body));
       }
-      dispatch(showTicker(res.body));
+      dispatch(showTicker(JSON.parse(res.body)));
     });
   };
 }

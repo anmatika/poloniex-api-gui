@@ -20,10 +20,8 @@ const TickerRealTime = ({ state, dispatch }) => {
     service.socketApi.connect().then(c => console.log('connected'));
     service.socketApi.emit('returnTickerRealTime', 'all');
     service.socketApi.on('ticker', (data) => {
-      setTimeout(() => {
-        dispatch(actions.showTickerRealTime(data));
-        dispatch(actions.toggleSpinner(false));
-      }, 10000);
+      dispatch(actions.showTickerRealTime(data));
+      dispatch(actions.toggleSpinner(false));
     });
   }
 

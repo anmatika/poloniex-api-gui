@@ -58,25 +58,35 @@ function showTickerRealTime(state, action) {
     arrTickerRealTime = state.tickersRealTime.slice();
   }
 
-  action.data.forEach((d) => {
-    const data = {
-      key: d.currencyPair,
-      value: d,
+  action.data.forEach((obj) => {
+    const currencyObjNew = {
+      key: obj.currencyPair,
+      value: obj,
     };
-    if (arrTickerRealTime.some(x => x.key === data.key)) {
-      console.log(data.key, 'same key');
+    if (arrTickerRealTime.some(x => x.key === currencyObjNew.key)) {
+      console.log(currencyObjNew.key, 'same key');
 
-      const key = arrTickerRealTime.find(x => x.key === data.key);
-      data.value.priceChangedUp = key.value.lastPrice < data.value.lastPrice;
-      data.value.priceChangedDown = key.value.lastPrice > data.value.lastPrice;
-      data.value.priceSame = key.value.lastPrice === data.value.lastPrice;
-      key.value = data.value;
+      const currencyObjExisting = arrTickerRealTime.find(x => x.key === currencyObjNew.key);
+      currencyObjNew.value.priceChangedUp = currencyObjExisting.value.lastPrice < currencyObjNew.value.lastPrice;
+      currencyObjNew.value.priceChangedDown = currencyObjExisting.value.lastPrice > currencyObjNew.value.lastPrice;
+      currencyObjNew.value.priceSame = currencyObjExisting.value.lastPrice === currencyObjNew.value.lastPrice;
+      currencyObjExisting.value = currencyObjNew.value;
     } else {
-      console.log(data.key, 'added');
-      arrTickerRealTime.push(data);
+      console.log(currencyObjNew.key, 'added');
+      arrTickerRealTime.push(currencyObjNew);
     }
   });
 
-
-  return Object.assign({}, state, { tickersRealTime: arrTickerRealTime });
+  const arrTickerRealTimeSorted = arrTickerRealTime.sort((a, b) => {
+    const nameA = a.key.toUpperCase(); // ignore upper and lowercase
+    const nameB = b.key.toUpperCase(); // ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    return 0;
+  });
+  return Object.assign({}, state, { tickersRealTime: arrTickerRealTimeSorted });
 }

@@ -85,18 +85,6 @@ app.get('/api/returnTicker', (req, res) => {
       }).catch(err => res.send(err));
 });
 
-
-app.get('/api/returnTickerRealTime', (req, res) => {
-  res.setHeader('Content-Type', 'application/json');
-  pushApi.create({
-    subscriptionName: 'ticker',
-    currencyPair: 'BTC_ETH',
-    debug: true }, (obj) => {
-    console.log(obj);
-    socket.emit(obj);
-  });
-});
-
 io.on('connection', (socket) => {
   let setIntervalId;
   let buffer = [];
