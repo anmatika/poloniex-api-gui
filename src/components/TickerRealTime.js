@@ -64,7 +64,7 @@ const TickerRealTime = ({ state, dispatch }) => {
 
         return (<div key={`ticker-${x.key}`}>
           <div className="col-xs-3">
-            <Panel header={x.key}>
+            <Panel header={x.key} className="ticker-realtime-panel">
               <ListGroup>
                 <ListGroupItem>
               Price: <span className={priceClassNames}>{ x.value.lastPrice }</span>
