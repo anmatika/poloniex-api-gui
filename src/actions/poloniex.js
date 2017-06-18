@@ -10,6 +10,7 @@ export const BUY = 'BUY';
 export const SHOW_MESSAGE = 'SHOW_MESSAGE';
 export const TOGGLE_SPINNER = 'TOGGLE_SPINNER';
 export const SHOW_TICKER_REAL_TIME_SUBSCRIBED = 'SHOW_TICKER_REAL_TIME_SUBSCRIBED';
+export const SET_TICKER_REAL_TIME_SEARCH_TERM = 'SET_TICKER_REAL_TIME_SEARCH_TERM';
 
 export function setInitialValues() {
   return {
@@ -65,7 +66,12 @@ export function showTickerRealTimeSubscribe(data) {
     data,
   };
 }
-
+export function setTickerRealTimeSearchTerm(data) {
+  return {
+    type: SET_TICKER_REAL_TIME_SEARCH_TERM,
+    data,
+  };
+}
 export function getBalancesAsync() {
   return (dispatch, getState) => {
     dispatch(toggleSpinner(true));

@@ -1,5 +1,5 @@
 // @flow
-import { SHOW_TICKER_REAL_TIME_SUBSCRIBED, SHOW_TICKER, SHOW_TICKER_REAL_TIME, GET_BALANCES, TOGGLE_SPINNER, SHOW_OPEN_ORDERS, SET_INITIAL_VALUES, SHOW_MESSAGE } from '../actions/poloniex';
+import { SET_TICKER_REAL_TIME_SEARCH_TERM, SHOW_TICKER_REAL_TIME_SUBSCRIBED, SHOW_TICKER, SHOW_TICKER_REAL_TIME, GET_BALANCES, TOGGLE_SPINNER, SHOW_OPEN_ORDERS, SET_INITIAL_VALUES, SHOW_MESSAGE } from '../actions/poloniex';
 import objecthelper from '../utils/objectHelper';
 
 export default function poloniex(state = {}, action) {
@@ -11,6 +11,7 @@ export default function poloniex(state = {}, action) {
           value: [{}],
         }],
         tickersRealTime: [],
+        showTickerRealTimeSearchTerm: '',
       };
 
     case GET_BALANCES:
@@ -43,6 +44,9 @@ export default function poloniex(state = {}, action) {
 
     case SHOW_TICKER_REAL_TIME:
       return showTickerRealTime(state, action);
+
+    case SET_TICKER_REAL_TIME_SEARCH_TERM:
+      return Object.assign({}, state, { showTickerRealTimeSearchTerm: action.data });
 
     default:
       console.log('state default', state);

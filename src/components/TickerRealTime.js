@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
+import SearchInput, { createFilter } from 'react-search-input';
+import _ from 'lodash';
 import Grid from './Grid';
 import * as actions from '../actions/poloniex';
-import _ from 'lodash';
 import classNames from 'classnames';
 import service from './service';
 
@@ -28,33 +29,12 @@ const TickerRealTime = ({ state, dispatch }) => {
     });
   }
 
-  function getRows() {
-    if (!state.tickersRealTime) return [];
-    return state.tickersRealTime.map(x => ({
-      currencyPair: x.key,
-      lastPrice: x.value.lastPrice,
-      lowestAsk: x.value.lowestAsk,
-      high24hr: x.value.high24hr,
-      low24hr: x.value.low24hr,
-      highestBid: x.value.highestBid,
-      percentChange: x.value.percentChange,
-      baseVolume: x.value.baseVolume,
-      quoteVolume: x.value.quoteVolume,
-      isFrozen: x.value.isFrozen,
-    }));
-  }
+  const searchUpdated = (term) => {
+    dispatch(actions.setTickerRealTimeSearchTerm(term || ''));
+  };
 
-  const columns = [
-        { key: 'currencyPair', name: 'Currency pair', sortable: true, filterable: true },
-        { key: 'lastPrice', name: 'Last price', sortable: true, filterable: true },
-        { key: 'percentChange', name: 'Percent', sortable: true, filterable: true },
-        { key: 'baseVolume', name: 'Volume base', sortable: true, filterable: true },
-        { key: 'quoteVolume', name: 'Volume quote', sortable: true, filterable: true },
-        { key: 'high24hr', name: 'High 24h', sortable: true, filterable: true },
-        { key: 'low24hr', name: 'Low 24h', sortable: true, filterable: true },
-        { key: 'highestBid', name: 'Highest bid', sortable: true, filterable: true },
-        { key: 'isFrozen', name: 'Frozen', sortable: true, filterable: true },
-  ];
+  const KEYS_TO_FILTERS = ['key'];
+  const filteredTickersRealTime = state.tickersRealTime.filter(createFilter(state.showTickerRealTimeSearchTerm, KEYS_TO_FILTERS));
 
   return (
     <div>
@@ -65,8 +45,11 @@ const TickerRealTime = ({ state, dispatch }) => {
         <div className="col-xs-12 margin-b-25">
           <Button bsStyle="primary" onClick={onClick} >{ state.showTickerRealTimeSubscribed ? 'Disconnect stream' : 'Connect stream' }</Button>
         </div>
+        <div className="col-xs-12 margin-b-25">
+          <SearchInput className="search-input" onChange={searchUpdated} />
+        </div>
       </div>
-      { state.tickersRealTime.length > 0 && state.tickersRealTime.map((x) => {
+      { state.tickersRealTime.length > 0 && filteredTickersRealTime.map((x) => {
         const priceClassNames = classNames({
           'color-green': x.value.priceChangedUp,
           'color-red': x.value.priceChangedDown,
