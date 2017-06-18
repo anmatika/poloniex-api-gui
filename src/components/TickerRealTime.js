@@ -2,10 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button, Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
 import SearchInput, { createFilter } from 'react-search-input';
-import _ from 'lodash';
-import Grid from './Grid';
-import * as actions from '../actions/poloniex';
 import classNames from 'classnames';
+import _ from 'lodash';
+import * as actions from '../actions/poloniex';
 import service from './service';
 
 const TickerRealTime = ({ state, dispatch }) => {
@@ -29,12 +28,14 @@ const TickerRealTime = ({ state, dispatch }) => {
     });
   }
 
+
   const searchUpdated = (term) => {
     dispatch(actions.setTickerRealTimeSearchTerm(term || ''));
   };
 
   const KEYS_TO_FILTERS = ['key'];
-  const filteredTickersRealTime = state.tickersRealTime.filter(createFilter(state.showTickerRealTimeSearchTerm, KEYS_TO_FILTERS));
+  const filteredTickersRealTime = state.tickersRealTime
+  .filter(createFilter(state.showTickerRealTimeSearchTerm, KEYS_TO_FILTERS));
 
   return (
     <div>
@@ -43,7 +44,12 @@ const TickerRealTime = ({ state, dispatch }) => {
         className="row"
       >
         <div className="col-xs-12 margin-b-25">
-          <Button bsStyle="primary" onClick={onClick} >{ state.showTickerRealTimeSubscribed ? 'Disconnect stream' : 'Connect stream' }</Button>
+          <Button bsStyle="primary" onClick={onClick} >
+            { state.showTickerRealTimeSubscribed
+              ? 'Disconnect stream'
+              : 'Connect stream'
+            }
+          </Button>
         </div>
         <div className="col-xs-12 margin-b-25">
           <SearchInput className="search-input" onChange={searchUpdated} />
@@ -69,10 +75,8 @@ const TickerRealTime = ({ state, dispatch }) => {
               </ListGroup>
             </Panel>
           </div>
-        </div>)
- ;
+        </div>);
       })}
-
     </div>);
 };
 

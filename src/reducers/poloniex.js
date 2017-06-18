@@ -68,15 +68,12 @@ function showTickerRealTime(state, action) {
       value: obj,
     };
     if (arrTickerRealTime.some(x => x.key === currencyObjNew.key)) {
-      console.log(currencyObjNew.key, 'same key');
-
       const currencyObjExisting = arrTickerRealTime.find(x => x.key === currencyObjNew.key);
       currencyObjNew.value.priceChangedUp = currencyObjExisting.value.lastPrice < currencyObjNew.value.lastPrice;
       currencyObjNew.value.priceChangedDown = currencyObjExisting.value.lastPrice > currencyObjNew.value.lastPrice;
       currencyObjNew.value.priceSame = currencyObjExisting.value.lastPrice === currencyObjNew.value.lastPrice;
       currencyObjExisting.value = currencyObjNew.value;
     } else {
-      console.log(currencyObjNew.key, 'added');
       arrTickerRealTime.push(currencyObjNew);
     }
   });
