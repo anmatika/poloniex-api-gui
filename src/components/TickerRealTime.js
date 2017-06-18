@@ -9,7 +9,7 @@ import service from './service';
 
 const TickerRealTime = ({ state, dispatch }) => {
   function onClick(e) {
-    dispatch(actions.toggleSpinner(true));
+    dispatch(actions.toggleSpinner(true, 'Connecting to ticker stream can sometimes take even a minute, please be patient...'));
     dispatch(actions.showTickerRealTimeSubscribe(!state.showTickerRealTimeSubscribed));
 
     if (state.showTickerRealTimeSubscribed) {
@@ -71,6 +71,18 @@ const TickerRealTime = ({ state, dispatch }) => {
                 </ListGroupItem>
                 <ListGroupItem>
               %: { x.value.percentChange }
+                </ListGroupItem>
+                <ListGroupItem>
+              Volume (base): { x.value.baseVolume }
+                </ListGroupItem>
+                <ListGroupItem>
+              Volume (quote): { x.value.quoteVolume }
+                </ListGroupItem>
+                <ListGroupItem>
+              High (24h): { x.value.high24 }
+                </ListGroupItem>
+                <ListGroupItem>
+              Low (24h): { x.value.low24 }
                 </ListGroupItem>
               </ListGroup>
             </Panel>

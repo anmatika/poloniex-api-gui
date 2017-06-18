@@ -6,6 +6,7 @@ const Spinner = (props) => {
   if (!props.state.spinner) return null;
   return (<div className="react-spinner-container">
     <ReactSpinner />
+    <div className="react-spinner-text"> { props.state.spinnerText } </div>
   </div>);
 };
 

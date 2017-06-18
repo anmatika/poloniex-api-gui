@@ -53,10 +53,13 @@ export function showMessage(data) {
   };
 }
 
-export function toggleSpinner(data) {
+export function toggleSpinner(isToggled, text = '') {
   return {
     type: TOGGLE_SPINNER,
-    data,
+    data: {
+      isToggled,
+      text,
+    },
   };
 }
 

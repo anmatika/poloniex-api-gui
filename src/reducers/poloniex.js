@@ -32,7 +32,7 @@ export default function poloniex(state = {}, action) {
       return Object.assign({}, state, { message: action.data });
 
     case TOGGLE_SPINNER:
-      return Object.assign({}, state, { spinner: action.data });
+      return Object.assign({}, state, { spinner: action.data.isToggled, spinnerText: action.data.text });
 
     case SHOW_TICKER:
       const arr = objecthelper.objectToArray(action.data);

@@ -95,6 +95,7 @@ io.of('tickerRealTime')
       subscriptionName: 'ticker',
       currencyPair: currencyPair || 'all',
       debug: true }, (obj) => {
+      console.log(obj);
       buffer.push(obj);
     });
   });
