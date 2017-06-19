@@ -16,6 +16,7 @@
         "express": "^4.15.3",
         "font-awesome": "^4.7.0",
         "isomorphic-fetch": "^2.2.1",
+        "lodash": "^4.17.4",
         "nodemon": "^1.11.0",
         "poloniex-api": "^1.1.0",
         "react": "^15.5.4",
@@ -27,11 +28,13 @@
         "react-router": "^4.1.1",
         "react-router-dom": "^4.1.1",
         "react-router-redux": "^5.0.0-alpha.6",
+        "react-search-input": "^0.11.2",
         "react-spinner": "^0.2.7",
         "react-tabs": "^1.0.0",
         "redux": "^3.6.0",
         "redux-form": "^6.7.0",
         "redux-thunk": "^2.2.0",
+        "socket.io": "^2.0.3",
         "source-map-support": "^0.4.14"
     },
     "devDependencies": {

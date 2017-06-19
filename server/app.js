@@ -6,9 +6,12 @@ const http = require('http');
 const app = express();
 const chalk = require('chalk');
 const bodyParser = require('body-parser');
+const server = require('http').createServer(app);
+const io = require('socket.io').listen(server);
 
 const tradingApi = PoloniexApi.tradingApi.create(apikeys.poloniex_api_key, apikeys.poloniex_secret, true);
 const publicApi = PoloniexApi.publicApi.create('', '', true);
+const pushApi = PoloniexApi.pushApi;
 
 app.use(bodyParser.urlencoded({
   extended: true,
@@ -82,6 +85,37 @@ app.get('/api/returnTicker', (req, res) => {
       }).catch(err => res.send(err));
 });
 
-app.listen(app.get('port'), () => {
+io.of('tickerRealTime')
+.on('connection', (socket) => {
+  let setIntervalId;
+  let buffer = [];
+  // when the client emits 'new message', this listens and executes
+  socket.on('returnTickerRealTime', (currencyPair) => {
+    pushApi.create({
+      subscriptionName: 'ticker',
+      currencyPair: currencyPair || 'all',
+      debug: true }, (obj) => {
+      console.log(obj);
+      buffer.push(obj);
+    });
+  });
+
+  setIntervalId = setInterval(() => {
+    socket.volatile.emit('ticker', buffer);
+    buffer = [];
+  }, 2000);
+
+  socket.on('connect', () => {
+    console.log(`${socket.name} has connected. ${socket.id}`);
+  });
+
+  socket.on('disconnect', () => {
+    console.log(`${socket.name} has disconnected. ${socket.id}`);
+    clearInterval(setIntervalId);
+  });
+});
+
+
+server.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
 });

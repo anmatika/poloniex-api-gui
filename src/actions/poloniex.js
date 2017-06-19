@@ -3,11 +3,14 @@ import Client from '../Client';
 
 export const GET_BALANCES = 'GET_BALANCES';
 export const SHOW_TICKER = 'SHOW_TICKER';
+export const SHOW_TICKER_REAL_TIME = 'SHOW_TICKER_REAL_TIME';
 export const SHOW_OPEN_ORDERS = 'SHOW_OPEN_ORDERS';
 export const SET_INITIAL_VALUES = 'SET_INITIAL_VALUES';
 export const BUY = 'BUY';
 export const SHOW_MESSAGE = 'SHOW_MESSAGE';
 export const TOGGLE_SPINNER = 'TOGGLE_SPINNER';
+export const SHOW_TICKER_REAL_TIME_SUBSCRIBED = 'SHOW_TICKER_REAL_TIME_SUBSCRIBED';
+export const SET_TICKER_REAL_TIME_SEARCH_TERM = 'SET_TICKER_REAL_TIME_SEARCH_TERM';
 
 export function setInitialValues() {
   return {
@@ -29,6 +32,13 @@ export function showTicker(data) {
   };
 }
 
+export function showTickerRealTime(data) {
+  return {
+    type: SHOW_TICKER_REAL_TIME,
+    data,
+  };
+}
+
 export function showOpenOrders(data) {
   return {
     type: SHOW_OPEN_ORDERS,
@@ -43,13 +53,28 @@ export function showMessage(data) {
   };
 }
 
-export function toggleSpinner(data) {
+export function toggleSpinner(isToggled, text = '') {
   return {
     type: TOGGLE_SPINNER,
-    data,
+    data: {
+      isToggled,
+      text,
+    },
   };
 }
 
+export function showTickerRealTimeSubscribe(data) {
+  return {
+    type: SHOW_TICKER_REAL_TIME_SUBSCRIBED,
+    data,
+  };
+}
+export function setTickerRealTimeSearchTerm(data) {
+  return {
+    type: SET_TICKER_REAL_TIME_SEARCH_TERM,
+    data,
+  };
+}
 export function getBalancesAsync() {
   return (dispatch, getState) => {
     dispatch(toggleSpinner(true));
@@ -114,9 +139,7 @@ export function cancelOrderAsync(orderNumber) {
   return (dispatch, getState) => {
     dispatch(toggleSpinner(true));
     Client.post('cancelOrder', { orderNumber })
-            .then((res) => {
-              return dispatch(showMessage(res.body));
-            })
+            .then(res => dispatch(showMessage(res.body)))
             .catch(err => console.log('err', err))
             .then(() => dispatch(toggleSpinner(false)));
   };
@@ -128,7 +151,7 @@ export function returnTickerAsync() {
       if (res.statusCode === 403) {
         dispatch(showMessage(res.body));
       }
-      dispatch(showTicker(res.body));
+      dispatch(showTicker(JSON.parse(res.body)));
     });
   };
 }
